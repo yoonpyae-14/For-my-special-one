@@ -1,0 +1,787 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#101b16">
+
+<title>Somewhere, in Green | For Chan</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root{
+
+ --bg:#101b16;--panel:#18251d;--leaf:#a9d0a9;
+
+ --bright:#d6ead0;--muted:#a5b4a6;--line:#34483a;
+
+ --cream:#f4f2e7;--gold:#d9c89c;
+
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+
+ margin:0;background:var(--bg);color:var(--cream);
+
+ font-family:'DM Sans',sans-serif;overflow-x:hidden;
+
+}
+
+button,input{font:inherit}
+
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+button:focus-visible,input:focus-visible{outline:2px solid var(--leaf);outline-offset:4px}
+
+::selection{background:#55775c;color:white}
+
+#rain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+.app{position:relative;z-index:1;width:min(100% - 34px,560px);margin:auto;padding:23px 0 65px}
+
+nav{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffffff18;padding-bottom:17px}
+
+.brand{font-size:10px;letter-spacing:3px;color:var(--leaf)}
+
+.navbtn{border:1px solid var(--line);background:transparent;color:var(--leaf);padding:9px 12px;border-radius:30px;font-size:11px}
+
+.page{display:none;animation:appear .65s ease both}
+
+.page.on{display:block}
+
+@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+
+.serif{font-family:'Playfair Display',Georgia,serif;font-weight:400}
+
+.kicker{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--leaf)}
+
+h1{font-size:clamp(44px,12vw,76px);line-height:1.04;letter-spacing:-2px;margin:23px 0}
+
+h2{font-size:clamp(31px,8vw,44px);line-height:1.18;margin:15px 0}
+
+h3{font-size:22px;font-weight:500}
+
+p{font-size:14px;line-height:1.9;color:var(--muted)}
+
+.small{font-size:11px}
+
+.center{text-align:center}
+
+.hero{min-height:77vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 0}
+
+.earth{
+
+ width:180px;height:180px;border-radius:50%;margin:20px 0 30px;
+
+ position:relative;display:grid;place-items:center;
+
+ background:
+
+ radial-gradient(ellipse at 30% 30%,#9ebd87 0 8%,transparent 9%),
+
+ radial-gradient(ellipse at 68% 42%,#3b6749 0 15%,transparent 16%),
+
+ radial-gradient(ellipse at 43% 72%,#55774b 0 18%,transparent 19%),
+
+ radial-gradient(circle at 35% 30%,#c8dfb4,#547a53 40%,#243f30 75%);
+
+ box-shadow:0 0 50px #79a97819, inset -16px -14px 30px #07110b99;
+
+ animation:drift 7s ease-in-out infinite;
+
+}
+
+.earth:before,.earth:after{content:"";position:absolute;border:1px solid #a7cba355;border-radius:50%;inset:-13px;transform:rotate(-22deg) scaleY(.35)}
+
+.earth:after{inset:-31px;transform:rotate(40deg) scaleY(.35);border-color:#d0d8a444}
+
+.earth span{font-size:37px;text-shadow:0 0 25px #e2edb8}
+
+@keyframes drift{50%{transform:translateY(-8px) rotate(3deg)}}
+
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:26px 0}
+
+.field{width:100%;background:#0d1711;border:1px solid #435a46;color:white;padding:16px;border-radius:12px;text-align:center;margin:18px 0 10px;outline:none}
+
+.field::placeholder{color:#839384}
+
+.btn{width:100%;border:1px solid var(--leaf);background:var(--leaf);color:#142117;padding:15px 17px;border-radius:10px;font-weight:700;margin-top:9px;transition:.2s}
+
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+.btn.ghost{background:transparent;color:var(--bright);border-color:var(--line)}
+
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.card{background:#18251d;border:1px solid #ffffff13;border-radius:18px;padding:23px;margin:16px 0}
+
+.tag{font-size:10px;letter-spacing:2px;color:var(--gold)}
+
+.bigquote{font-size:clamp(24px,6vw,34px);line-height:1.5}
+
+.leafline{color:var(--leaf);font-size:24px;letter-spacing:10px}
+
+.fieldnote{border-left:1px solid var(--leaf);padding:4px 0 4px 16px;text-align:left}
+
+.meter{height:3px;background:#344238;margin:18px 0}
+
+.meter div{height:100%;width:0;background:var(--leaf);transition:width .6s}
+
+.garden{position:relative;height:290px;border-radius:18px;overflow:hidden;background:linear-gradient(#182b23,#23392a 60%,#111d16);border:1px solid #ffffff17}
+
+.garden:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:#a9c99b10;top:-80px;left:calc(50% - 90px)}
+
+.ground{position:absolute;bottom:-60px;left:-15%;width:130%;height:150px;border-radius:50% 50% 0 0;background:#293d2b;border-top:1px solid #8da98544}
+
+.flower{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);height:0;transition:height 1s}
+
+.stem{position:absolute;bottom:0;left:-2px;width:4px;height:var(--height,70px);background:#9ac08d;border-radius:5px;transition:height 1s}
+
+.bloom{position:absolute;bottom:var(--height,70px);left:50%;transform:translate(-50%,50%) scale(.2);font-size:45px;opacity:0;transition:all .7s .2s}
+
+.flower.grown .bloom{opacity:1;transform:translate(-50%,0) scale(1)}
+
+.flower.grown .stem{height:90px}
+
+.leafshape{position:absolute;width:30px;height:15px;border-radius:100% 0 100% 0;background:#79a477;bottom:35px;left:0;transform:rotate(-30deg)}
+
+.leafshape.right{bottom:52px;left:-24px;transform:rotate(45deg) scaleX(-1)}
+
+.firefly{position:absolute;color:#e0e9ac;font-size:14px;animation:blink 2s infinite alternate}
+
+@keyframes blink{to{opacity:.2;transform:scale(.7)}}
+
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+
+.option{min-height:85px;border-radius:12px;border:1px solid var(--line);background:#101b16;color:var(--cream);padding:12px;font-size:12px}
+
+.option.active{border-color:var(--leaf);background:#293b2c}
+
+.option span{display:block;font-size:24px;margin-bottom:8px}
+
+#message{min-height:20px;color:var(--leaf);font-size:12px}
+
+.nightwindow{padding:25px 14px;background:linear-gradient(150deg,#1a2a22,#111a15);border:1px solid var(--line);border-radius:18px}
+
+.constellation{width:100%;height:180px;display:block;touch-action:manipulation}
+
+.starpoint{cursor:pointer;fill:#d5e6b9;filter:drop-shadow(0 0 7px #b5d69a)}
+
+#skyMessage{min-height:55px}
+
+.letter{white-space:pre-line;line-height:2.1;font-family:'Playfair Display',Georgia,serif;font-size:17px;color:#e4e8da}
+
+.envelope{width:120px;height:85px;margin:25px auto;background:#a8c59a;position:relative;border-radius:5px;display:grid;place-items:center;color:#1a2a1c;font-size:30px;cursor:pointer;box-shadow:0 8px 35px #0003}
+
+.envelope:before{content:"";position:absolute;top:0;left:0;border-left:60px solid transparent;border-right:60px solid transparent;border-top:45px solid #d0dfc3}
+
+.hidden{display:none!important}
+
+.footer{text-align:center;font-size:10px;letter-spacing:2px;color:#617565;margin-top:48px}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="rain"></canvas>
+
+<main class="app">
+
+<nav>
+
+ <span class="brand">FIELD NOTES Nº 014</span>
+
+ <button class="navbtn" id="song">♫ a song for later</button>
+
+</nav>
+
+<!-- ENTER -->
+
+<section class="page on" id="p0">
+
+ <div class="hero">
+
+  <div class="kicker">A place that doesn't exist on any map</div>
+
+  <div class="earth"><span>✳</span></div>
+
+  <h1 class="serif">Somewhere,<br><i>in green.</i></h1>
+
+  <p>There are places we visit.<br>And places that somehow feel like a person.</p>
+
+  <div class="card" style="width:100%;text-align:left">
+
+   <div class="tag">VISITOR REGISTRATION</div>
+
+   <label for="visitor" class="small">This little place is looking for someone.</label>
+
+   <input class="field" id="visitor" placeholder="Enter your full name" autocomplete="name">
+
+   <button class="btn" id="enter">Find my way in ↗</button>
+
+   <p class="small center" id="error"></p>
+
+  </div>
+
+ </div>
+
+</section>
+
+<!-- ARRIVAL -->
+
+<section class="page" id="p1">
+
+ <div class="hero">
+
+  <div class="kicker">Registration complete · October 14</div>
+
+  <div class="leafline">☘ · ✳ · ☘</div>
+
+  <h1 class="serif">Oh, there<br>you are.</h1>
+
+  <p>Chan, some places are built with bricks.<br>This one was built from little thoughts<br>that kept finding their way back to you.</p>
+
+  <div class="rule"></div>
+
+  <button class="btn" id="arrive">I'm listening. Show me. →</button>
+
+ </div>
+
+</section>
+
+<!-- THE GARDEN -->
+
+<section class="page" id="p2">
+
+ <div class="kicker">01 / A living thing</div>
+
+ <h2 class="serif">Every garden<br>starts somewhere.</h2>
+
+ <p>Some things don't grow because you ask them to. They grow because you keep showing up.</p>
+
+ <div class="garden" id="garden">
+
+  <div class="ground"></div>
+
+  <span class="firefly" style="left:17%;top:25%">✦</span>
+
+  <span class="firefly" style="left:76%;top:38%;animation-delay:.7s">✧</span>
+
+  <span class="firefly" style="left:32%;top:58%;animation-delay:1.1s">·</span>
+
+  <div class="flower" id="flower">
+
+   <div class="stem" id="stem"></div>
+
+   <div class="leafshape"></div><div class="leafshape right"></div>
+
+   <div class="bloom" id="bloom">✿</div>
+
+  </div>
+
+ </div>
+
+ <div class="card">
+
+  <div class="tag">A SMALL EXPERIMENT</div>
+
+  <p id="plantText">Give this little seed some attention. Tap the water button three times.</p>
+
+  <div class="meter"><div id="growth"></div></div>
+
+  <button class="btn" id="water">Water the little thing +1</button>
+
+  <p id="plantMessage" class="small center"></p>
+
+ </div>
+
+ <button class="btn ghost" id="gardenNext" disabled>See what grew →</button>
+
+</section>
+
+<!-- THE FIELD NOTES -->
+
+<section class="page" id="p3">
+
+ <div class="kicker">02 / Observations</div>
+
+ <h2 class="serif">Things worth<br>keeping.</h2>
+
+ <p>Not everything meaningful has to be said out loud.</p>
+
+ <div class="card">
+
+  <div class="tag">OBSERVATION NO. 01</div>
+
+  <div class="bigquote serif">The way you make ordinary conversations feel like time well spent.</div>
+
+ </div>
+
+ <div class="card">
+
+  <div class="tag">OBSERVATION NO. 02</div>
+
+  <div class="bigquote serif">The little things you probably don't even realise someone remembers.</div>
+
+ </div>
+
+ <div class="card">
+
+  <div class="tag">OBSERVATION NO. 03</div>
+
+  <div class="bigquote serif">How a day can feel different just because you've been part of it.</div>
+
+ </div>
+
+ <div class="fieldnote">
+
+  <div class="tag">NOTE TO SELF</div>
+
+  <p>Some people leave a little warmth behind, even after an ordinary conversation. Funny how that works.</p>
+
+ </div>
+
+ <button class="btn" id="notesNext">There's more in the sky →</button>
+
+</section>
+
+<!-- CONNECT THE SKY -->
+
+<section class="page" id="p4">
+
+ <div class="kicker">03 / A map of almost-nothings</div>
+
+ <h2 class="serif">Connect the<br>quiet little lights.</h2>
+
+ <p>Tap each star to reveal a thought. Nothing needs to be perfect to make a constellation.</p>
+
+ <div class="nightwindow">
+
+  <svg class="constellation" viewBox="0 0 320 180" id="sky">
+
+   <g stroke="#718d73" stroke-width="1" opacity=".7" fill="none">
+
+    <path d="M45 48 L113 86 L185 35 L262 76 L217 137 L113 86"/>
+
+   </g>
+
+   <circle class="starpoint" data-i="0" cx="45" cy="48" r="7"/>
+
+   <circle class="starpoint" data-i="1" cx="113" cy="86" r="7"/>
+
+   <circle class="starpoint" data-i="2" cx="185" cy="35" r="7"/>
+
+   <circle class="starpoint" data-i="3" cx="262" cy="76" r="7"/>
+
+   <circle class="starpoint" data-i="4" cx="217" cy="137" r="7"/>
+
+  </svg>
+
+  <div id="skyMessage" class="serif bigquote">Every light has a little story.</div>
+
+  <div class="meter"><div id="skyProgress"></div></div>
+
+  <p class="small" id="starCount">0 / 5 lights discovered</p>
+
+ </div>
+
+ <button class="btn" id="skyNext" disabled>Keep this little sky →</button>
+
+</section>
+
+<!-- THE SOUNDTRACK -->
+
+<section class="page" id="p5">
+
+ <div class="kicker">04 / Soundtrack for a quiet evening</div>
+
+ <h2 class="serif">Some songs<br>feel like a memory<br>you haven't made yet.</h2>
+
+ <p>No grand speech. Just a song, a little quiet, and a moment that belongs to you.</p>
+
+ <div class="card center">
+
+  <div style="font-size:45px;margin:10px">♫</div>
+
+  <div class="tag">YOUR LITTLE SOUNDTRACK</div>
+
+  <h3 class="serif">I Think They Call This Love</h3>
+
+  <p>Elliot James Reay</p>
+
+  <button class="btn" id="playSong">Find the song on YouTube ↗</button>
+
+  <p class="small">A song to play when the evening feels a little softer.</p>
+
+ </div>
+
+ <div class="rule"></div>
+
+ <p class="center serif" style="font-size:22px;color:var(--bright)">“Same sky. Different places.<br>Still a little thought of you.”</p>
+
+ <button class="btn ghost" id="soundNext">One last page →</button>
+
+</section>
+
+<!-- THE LETTER -->
+
+<section class="page" id="p6">
+
+ <div class="kicker">05 / Open when you're ready</div>
+
+ <h2 class="serif">Something<br>left unsaid.</h2>
+
+ <p>This envelope doesn't contain a big confession. Just a little honesty.</p>
+
+ <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open letter">♡</div>
+
+ <p class="small center" id="envelopeHint">Tap the envelope.</p>
+
+ <article class="card hidden" id="letter">
+
+  <div class="tag">OCTOBER 14 · FOR CHAN</div>
+
+  <div class="letter">
+
+Happy 19th birthday, Chan. ♡
+
+I hope this year is kind to you in all the little ways that matter. I hope you find more reasons to laugh, more chances to do the things you love, and more moments when you realise you're doing better than you think.
+
+Thank you for being someone I can talk to, someone who listens, and someone whose little words of encouragement can mean more than they might seem to.
+
+I hope you never feel like you have to become someone else to deserve good things. You already deserve them as you are.
+
+And if you ever have a day when everything feels a bit too much, I hope there will always be someone in your corner reminding you that you can take things one step at a time.
+
+I'm glad our paths crossed. Out of all the ordinary days, I'm glad some of them included you.
+
+There's a small, quiet kind of affection that doesn't need to turn into a grand announcement. It can simply be grateful that you exist, proud of the person you are, and happy to see you smile.
+
+So here's to your 19th year: more happiness, more beautiful surprises, and every good thing your heart has been hoping for.
+
+Happy birthday, Chan. Keep a little space in your world for the things that make you feel alive.
+
+And whatever happens, I'm cheering for you. Always. 💚
+
+  </div>
+
+  <p class="small" style="text-align:right">— someone who thinks you're pretty special</p>
+
+  <button class="btn" id="last">Leave a little light on ✦</button>
+
+ </article>
+
+</section>
+
+<!-- END -->
+
+<section class="page" id="p7">
+
+ <div class="hero">
+
+  <div class="kicker">FIELD NOTES · FINAL ENTRY</div>
+
+  <div class="earth"><span>♡</span></div>
+
+  <h1 class="serif">Take the<br>good things<br><i>with you.</i></h1>
+
+  <p>May life surprise you gently.<br>May the people around you see your worth.<br>May you always find your way back to yourself.</p>
+
+  <div class="card" style="width:100%">
+
+   <div class="tag">A LITTLE REMINDER</div>
+
+   <p class="serif bigquote" style="color:var(--bright)">You don't have to be extraordinary every day to make a difference in someone's world.</p>
+
+   <p>Sometimes being you is already enough.</p>
+
+  </div>
+
+  <button class="btn" id="finish">Keep this little place in your pocket ♡</button>
+
+  <p class="small" id="finishMsg"></p>
+
+  <button class="btn ghost" id="restart">Wander through again ↺</button>
+
+ </div>
+
+</section>
+
+<footer class="footer">GROWN QUIETLY · REMEMBERED FONDLY · Nº 014</footer>
+
+</main>
+
+<script>
+
+const $=id=>document.getElementById(id);
+
+function show(n){
+
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+
+ $('p'+n).classList.add('on');
+
+ window.scrollTo({top:0,behavior:'smooth'});
+
+}
+
+$('enter').onclick=()=>{
+
+ const n=$('visitor').value.trim().replace(/\s+/g,' ').toLowerCase();
+
+ if(n==='aye chan myat mon oo'){
+
+  $('error').textContent='';
+
+  show(1);
+
+ }else{
+
+  $('error').textContent='This place is looking for its own visitor. Try the full name again.';
+
+  $('visitor').focus();
+
+ }
+
+};
+
+$('visitor').addEventListener('keydown',e=>{if(e.key==='Enter')$('enter').click()});
+
+$('arrive').onclick=()=>show(2);
+
+// A growing garden
+
+let water=0;
+
+$('water').onclick=()=>{
+
+ if(water>=3)return;
+
+ water++;
+
+ $('growth').style.width=(water/3*100)+'%';
+
+ $('stem').style.setProperty('--height',(25+water*20)+'px');
+
+ if(water>=3){
+
+  $('flower').classList.add('grown');
+
+  $('bloom').textContent='✿';
+
+  $('plantText').textContent='Look at that. Something lovely grew because you gave it a little time.';
+
+  $('plantMessage').textContent='Some things are worth tending to. ♡';
+
+  $('water').disabled=true;
+
+  $('water').textContent='A little thing, now in bloom';
+
+  $('gardenNext').disabled=false;
+
+ }else{
+
+  $('plantMessage').textContent=['','A little patience.','Almost there.'][water];
+
+ }
+
+};
+
+$('gardenNext').onclick=()=>show(3);
+
+$('notesNext').onclick=()=>show(4);
+
+// Discover the five stars
+
+const thoughts=[
+
+ 'You deserve days that feel lighter than yesterday.',
+
+ 'I hope you know how much your kindness matters.',
+
+ 'Some conversations stay with you for no obvious reason.',
+
+ 'I hope your favourite songs always find you at the right time.',
+
+ 'And maybe, somewhere in the middle of an ordinary day, someone is smiling because of you.'
+
+];
+
+let found=new Set();
+
+document.querySelectorAll('.starpoint').forEach(s=>{
+
+ s.addEventListener('click',()=>{
+
+  const i=Number(s.dataset.i);
+
+  if(found.has(i))return;
+
+  found.add(i);
+
+  s.setAttribute('r','10');
+
+  s.style.fill='#f0e7b5';
+
+  $('skyMessage').textContent=thoughts[i];
+
+  $('starCount').textContent=found.size+' / 5 lights discovered';
+
+  $('skyProgress').style.width=(found.size/5*100)+'%';
+
+  if(found.size===5){
+
+   $('skyNext').disabled=false;
+
+   $('skyMessage').textContent='Five little lights. One small sky. And a wish that all the good things find you.';
+
+  }
+
+ });
+
+});
+
+$('skyNext').onclick=()=>show(5);
+
+// Song links
+
+const songUrl='https://www.youtube.com/results?search_query=I+Think+They+Call+This+Love+Elliot+James+Reay';
+
+function openSong(){window.open(songUrl,'_blank','noopener,noreferrer')}
+
+$('song').onclick=openSong;
+
+$('playSong').onclick=openSong;
+
+$('soundNext').onclick=()=>show(6);
+
+// Letter envelope
+
+function openLetter(){
+
+ $('letter').classList.remove('hidden');
+
+ $('envelopeHint').textContent='A little honesty, just for you.';
+
+ $('envelope').textContent='♥';
+
+ $('envelope').style.transform='scale(.94)';
+
+}
+
+$('envelope').onclick=openLetter;
+
+$('envelope').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLetter()}};
+
+$('last').onclick=()=>show(7);
+
+$('finish').onclick=()=>{
+
+ $('finishMsg').textContent='No matter where you go next, I hope good things find you. Happy birthday, Chan. ♡';
+
+ $('finish').textContent='A little light, just for you ✦';
+
+};
+
+$('restart').onclick=()=>{
+
+ water=0;found.clear();
+
+ $('growth').style.width='0%';
+
+ $('stem').style.setProperty('--height','0px');
+
+ $('flower').classList.remove('grown');
+
+ $('water').disabled=false;
+
+ $('water').textContent='Water the little thing +1';
+
+ $('plantText').textContent='Give this little seed some attention. Tap the water button three times.';
+
+ $('plantMessage').textContent='';
+
+ $('gardenNext').disabled=true;
+
+ document.querySelectorAll('.starpoint').forEach(s=>{s.setAttribute('r','7');s.style.fill=''});
+
+ $('skyMessage').textContent='Every light has a little story.';
+
+ $('starCount').textContent='0 / 5 lights discovered';
+
+ $('skyProgress').style.width='0%';
+
+ $('skyNext').disabled=true;
+
+ $('letter').classList.add('hidden');
+
+ $('envelope').textContent='♡';
+
+ $('finishMsg').textContent='';
+
+ $('finish').textContent='Keep this little place in your pocket ♡';
+
+ show(0);
+
+};
+
+// Gentle ambient drifting lights
+
+const canvas=$('rain'),ctx=canvas.getContext('2d');
+
+let dots=[];
+
+function resize(){
+
+ const dpr=Math.min(devicePixelRatio||1,2);
+
+ canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;
+
+ canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';
+
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+
+ dots=Array.from({length:55},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.6+.3,a:Math.random()*.4+.08,v:Math.random()*.13+.025}));
+
+}
+
+function draw(){
+
+ ctx.clearRect(0,0,innerWidth,innerHeight);
+
+ for(const d of dots){
+
+  d.y-=d.v;if(d.y<0){d.y=innerHeight;d.x=Math.random()*innerWidth}
+
+  ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+
+  ctx.fillStyle=`rgba(173,211,161,${d.a})`;ctx.fill();
+
+ }
+
+ requestAnimationFrame(draw);
+
+}
+
+addEventListener('resize',resize);resize();requestAnimationFrame(draw);
+
+</script>
+
+</body>
+
+</html>
